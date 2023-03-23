@@ -13,11 +13,16 @@
       </div>
       <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
         <div class="card-body flex">
+          <% if (locals.messages.errors) { %> <% messages.errors.forEach( el=> {
+          %>
+          <div class="alert alert-warning"><%= el.msg %></div>
+          <% }) %> <% } %> <% if (locals.messages.info) { %> <%
+          messages.info.forEach( el=> { %>
+          <div class="alert alert-info"><%= el.msg %></div>
+          <% }) %> <% } %>
           <form action="/login" method="POST">
             <div class="form-control">
-              <label for="exampleInputEmail1" class="form-label"
-                >Email</label
-              >
+              <label for="exampleInputEmail1" class="form-label">Email</label>
               <input
                 type="email"
                 placeholder="example@mail.com"
@@ -28,14 +33,16 @@
               />
             </div>
             <div class="form-control">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input
-                  type="password"
-                  placeholder="password"
-                  class="input input-bordered"
-                  id="exampleInputPassword1"
-                  name="password"
-                />
+              <label for="exampleInputPassword1" class="form-label"
+                >Password</label
+              >
+              <input
+                type="password"
+                placeholder="password"
+                class="input input-bordered"
+                id="exampleInputPassword1"
+                name="password"
+              />
               <label class="label">
                 <a href="#" class="label-text-alt link link-hover"
                   >Forgot password?</a
@@ -59,3 +66,4 @@
     </div>
   </div>
 </main>
+<%- include('partials/footer') -%>

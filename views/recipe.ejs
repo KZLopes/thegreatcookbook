@@ -1,0 +1,40 @@
+<%- include('partials/header') -%>
+<main class="h-screen">
+<!-- Title,Image,Actions -->
+  <div class="grid grid-cols-2 min-h-2/5">
+    <div class="card bg-base-100 shadow-xl">
+      <h2 class="card-title">Recipe Name</h2>
+      <h4 class="card-title">Recipe Author!</h4>
+      <figure><img src="#" alt="Dish" /></figure>
+      <div class="card-body">    
+        <div class="card-actions justify-end">
+          <button class="btn btn-accent">STAR</button>
+          <button class="btn btn-accent">Trash</button>
+        </div>
+      </div>
+    </div>
+
+  <!-- Ingredients -->
+    <div class="card bg-base-100 shadow-xl">
+      <h2 class="card-title">Ingredients</h2>
+      <div class="card-body">    
+        <ul>
+          <!-- foreach -->
+          <li>WAter</li>
+          <li>Sugar</li>
+          <li>Salt</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 min-h-1/2">
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">Walktrough</h2>
+        <p>If a dog chews shoes whose shoes does he choose?</p>
+      </div>
+    </div>
+  </div>
+</main>
+<%- include('partials/footer') -%>

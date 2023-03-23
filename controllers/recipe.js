@@ -6,7 +6,7 @@ module.exports = {
   getProfile: async (req, res) => {
     try {
       const recipes = await Recipe.find({ author: req.user.id });
-      res.render("profile.ejs", { recipes: recipes, author: req.user });
+      res.render("profile.ejs", { recipes: recipes, user: req.user });
     } catch (err) {
       console.log(err);
     }
@@ -22,10 +22,10 @@ module.exports = {
   getRecipe: async (req, res) => {
     try {
       const recipe = await Recipe.findById(req.params.id);
-      const comments = await Comment.find({ post: req.params.id })
+      const comments = await Comment.find({ recipe: req.params.id })
         .sort({ createdAt: "desc" })
         .lean();
-      res.render("post.ejs", {
+      res.render("recipe.ejs", {
         recipe: recipe,
         author: req.user,
         comments: comments,
@@ -41,17 +41,17 @@ module.exports = {
       console.log(req);
       await Recipe.create({
         title: req.body.title,
-		author: req.user.id,
+        author: req.user.id,
         image: result.secure_url,
         cloudinaryId: result.public_id,
         prepTIme: req.body.prepTime,
-		portions:req.body.portions,
+        portions: req.body.portions,
         likes: 0,
-		ingredients:req.body.ingredients,
-		walkthrough:req.body.walkthrough,
-		tips:req.body.tips,
+        ingredients: req.body.ingredients,
+        walkthrough: req.body.walkthrough,
+        tips: req.body.tips,
       });
-      console.log("Post has been added!");
+      console.log("Recipe has been added!");
       res.redirect("/profile");
     } catch (err) {
       console.log(err);

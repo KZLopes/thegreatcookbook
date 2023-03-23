@@ -5,7 +5,7 @@ const recipesController = require("../controllers/recipe");
 const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
 //Post Routes - simplified for now
-router.get("/:id", ensureAuth, recipesController.getRecipe);
+router.get("/", ensureAuth, recipesController.getRecipe);
 
 router.post("/createRecipe", upload.single("file"), recipesController.createRecipe);
 

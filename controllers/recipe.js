@@ -1,5 +1,6 @@
 const cloudinary = require("../middleware/cloudinary");
 const Recipe = require("../models/Recipe");
+const User = require("../models/User");
 const Comment = require("../models/Comment");
 
 module.exports = {
@@ -13,8 +14,9 @@ module.exports = {
   },
   getFeed: async (req, res) => {
     try {
-      const recipes = await Recipe.find().sort({ createdAt: "desc" }).lean();
-      res.render("feed.ejs", { recipes: recipes });
+      const recipes = await Recipe.find().populate('author', 'userName').sort({ createdAt: "desc" }).lean();
+
+      res.render("feed.ejs", { recipes: recipes});
     } catch (err) {
       console.log(err);
     }
@@ -34,17 +36,23 @@ module.exports = {
       console.log(err);
     }
   },
+  newRecipe: (req, res) => {
+    try {
+      res.render("newRecipe.ejs");
+    } catch (err) {
+      console.log(err);
+    }
+  },
   createRecipe: async (req, res) => {
     try {
       // Upload image to cloudinary
       const result = await cloudinary.uploader.upload(req.file.path);
-      console.log(req);
       await Recipe.create({
         title: req.body.title,
         author: req.user.id,
         image: result.secure_url,
         cloudinaryId: result.public_id,
-        prepTIme: req.body.prepTime,
+        prepTime: req.body.prepTime,
         portions: req.body.portions,
         likes: 0,
         ingredients: req.body.ingredients,
@@ -57,7 +65,7 @@ module.exports = {
       console.log(err);
     }
   },
-  //Maybe change to Toogle like earlier
+  //Maybe change to Toogle like 
   likeRecipe: async (req, res) => {
     try {
       await Recipe.findOneAndUpdate(

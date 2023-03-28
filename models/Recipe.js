@@ -19,7 +19,7 @@ const RecipeSchema = new mongoose.Schema({
     require: true,
   },
   prepTime: {
-    type: String,
+    type: Number,
     required: true,
   },
   portions: {
@@ -40,7 +40,7 @@ const RecipeSchema = new mongoose.Schema({
   },
   tips: {
     type: String,
-    required: true,
+    required: false,
   },  
   createdAt: {
     type: Date,

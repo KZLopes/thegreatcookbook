@@ -1,0 +1,58 @@
+<%- include('partials/header') -%>
+<div class="card flex-auto mx-1 bg-base-100 shadow-xl">
+    <div class="card-body items-center text-center">
+        <h2 class="card-title">Add Recipe</h2>
+        <div class="mt-5">
+            <form action="/recipe/createRecipe" enctype="multipart/form-data" method="POST">
+                <div class="form-control">
+                    <label class="input-group mx-1">
+                        <span>Title</span>
+                        <input type="text" class="input input-bordered" name="title" />
+                    </label>
+
+                    <label class="input-group  input-group-vertical my-1" id="ingredientList">
+                        <span>Ingredients</span>
+                        <input type="text" class="input input-bordered" name="ingredients" />
+                    </label>
+                    <div class="">
+                        <button type="button" class="btn btn-accent text-accent " id="addIngredientsBtn">+</button>
+                    </div>
+
+                    <label class="input-group my-1">
+                        <span>Walktrough</span>
+                        <textarea class="textarea textarea-bordered" name="walkthrough"></textarea>
+                    </label>
+
+                    <label class="input-group my-1">
+                        <span>Tips</span>
+                        <textarea class="textarea textarea-bordered" name="tips"></textarea>
+                    </label>
+
+                    <label class="input-group my-1">
+                        <span>Prep. Time</span>
+                        <input type="number" class="input input-bordered" name="prepTime" />
+                    </label>
+
+                    <label class="input-group my-1">
+                        <span>Portions</span>
+                        <input type="number" class="input input-bordered" name="portions" />
+                    </label>
+
+                    <label for="imgUpload" class="input-group input-group-vertical my-4">
+                        <span>Photo</span>
+                        <input type="file" class="file-input-accent file-input file-input-bordered w-full max-w-xs"
+                            id="imageUpload" name="file" />
+                    </label>
+                </div>
+                <button
+                type="submit"
+                class="flex-auto btn btn-outline btn-primary btn-lg"
+              >
+                Submit
+              </button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<%- include('partials/footer') -%>

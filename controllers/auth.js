@@ -5,7 +5,7 @@ const User = require("../models/User");
 module.exports = {
   getLogin: (req, res) => {
     if (req.user) {
-      return res.redirect("/profile");
+      return res.redirect("/profile/"+req.user._id);
     }
     res.render("login", {
       title: "Login",
@@ -40,21 +40,21 @@ module.exports = {
           return next(err);
         }
         req.flash("success", { msg: "Success! You are logged in." });
-        res.redirect(req.session.returnTo || "/profile");
+        res.redirect(req.session.returnTo || "/profile/"+user._id);
       });
     })(req, res, next);
   },
 
   logout: (req, res) => {
-    req.logout(() => {
-      console.log("User has logged out.");
-    });
     req.session.destroy((err) => {
       if (err)
         console.log(
           "Error : Failed to destroy the session during logout.",
           err
         );
+    req.logout(() => {
+      console.log("User has logged out.");
+    });
       req.user = null;
       res.redirect("/");
     });
@@ -62,10 +62,11 @@ module.exports = {
 
   getSignup: (req, res) => {
     if (req.user) {
-      return res.redirect("/profile");
+      return res.redirect("/profile/"+req.user._id);
     }
     res.render("signup", {
       title: "Create Account",
+      user: req.user
     });
   },
 
@@ -110,7 +111,7 @@ module.exports = {
             if (err) {
               return next(err);
             }
-            res.redirect("/profile");
+            res.redirect("/profile/"+ req.user._id);
           });
         } catch (err) {
           return next(err);

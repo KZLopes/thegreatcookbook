@@ -1,22 +1,150 @@
 <%- include('partials/header') -%>
-<div class="flex">
-<section class="w-1/2 inline-block">
-<div class="flex justify-around">
-  <div class="card flex-auto mx-1 bg-neutral shadow-xl items-center text-center">
-      <h2 class="card-title"><%= user.userName %></h2>
-    <!-- <figure class="px-10 pt-10">
-      <img src="" alt="Featured Recipe" class="rounded-xl" />
-    </figure> -->
-      <h2 class="card-title">About Me:</h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit quae libero, sint minus molestias ducimus temporibus.</p>
-  </div>
-</section>
-<section class="userRecipes w-1/2 inline-block">
-  <div class="flex justify-around">
-    <div class="card flex-auto mx-1 bg-neutral shadow-xl items-center text-center">
-        <h2 class="card-title"><%= user.userName %>`s Recipes</h2>
+<main class="grid grid-rows-4 gap-px my-px">
+  <section class="row-span-2 grid grid-cols-2 gap-px">
+    <div class="card bg-neutral items-center text-center p-5">
+      <h2 class="card-title">
+        <%= author.userName %>
+      </h2>
+      <figure class="px-10 pt-10">
+        <img src="" alt="Featured Recipe" class="rounded-xl" />
+      </figure>
+      <h2 class="card-title">
+        About Me:
+      </h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit quae libero, sint minus molestias ducimus
+        temporibus.
+      </p>
     </div>
-</section>
-</div>
-<script src="../public/js/script.js"></script>
-<%- include('partials/footer') -%>
+    <div class="flex flex-col justify-between card bg-neutral p-5">
+      <h2 class="card-title self-center">
+        <%= author.userName %>`s Recipes
+      </h2>
+      <ul class="grid grid-rows-2 grid-cols-2 gap-5">
+      <% for(var i=0; i<recipes.length && i<4; i++) { %>
+        <li class="justify-between mt-5">
+          <a href="/recipe/<%= recipes[i]._id%>" class="max-w-fit">
+            <div class="card card-compact bg-base-100 shadow-xl">
+              <figure><img src="<%= recipes[i].image%>" alt="<%= recipes[i].title%>" /></figure>
+                <h2 class="card-body">
+                  <%= recipes[i].title%>
+                </h2>
+            </div>
+          </a>
+        </li>
+      <% } %>
+      </ul>
+      <a href="/user/<%= author.id%>/recipes" class="self-end">See More...</a>
+    </div>
+  </section>
+  <section class="row-span-1">
+    <div class="card bg-neutral p-5">
+      <h2 class="card-title">Favorite Recipes</h2>
+      <ul class="grid grid-cols-4 gap-x-5">
+        <% for(var i=0; i<recipes.length && i<4; i++) { %>
+          <li class="justify-between mt-5">
+            <a href="/recipe/<%= recipes[i]._id%>" class="max-w-fit">
+              <div class="card card-compact bg-base-100 shadow-xl">
+                <figure><img src="<%= recipes[i].image%>" alt="<%= recipes[i].title%>" /></figure>
+                <div class="card-body">
+                  <h2 class="card-title">
+                    <%= recipes[i].title%>
+                  </h2>
+                </div>
+              </div>
+            </a>
+          </li>
+          <% } %>
+      </ul>
+      <a href="/user/<%= author.id%>/liked" class="self-end">See More...</a>
+    </div>
+  </section>
+  <section class="row-span-1">
+    <div class="card bg-neutral p-5">
+      <h2 class="card-title">Following</h2>
+      <ul class="grid grid-cols-4 gap-x-5">
+        <% for(var i=0; i<recipes.length && i<4; i++) { %>
+          <li class="justify-between mt-5">
+            <a href="/recipe/<%= recipes[i]._id%>" class="max-w-fit">
+              <div class="card card-compact bg-base-100 shadow-xl">
+                <figure><img src="<%= recipes[i].image%>" alt="<%= recipes[i].title%>" /></figure>
+                <div class="card-body">
+                  <h2 class="card-title">
+                    <%= recipes[i].title%>
+                  </h2>
+                </div>
+              </div>
+            </a>
+          </li>
+          <% } %>
+      </ul>
+      <a href="/user/<%= author.id%>/liked" class="self-end">See More...</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- 
+  <div class="flex flex-wrap place-content-stretch h-screen">
+    <section class="basis-1/2 inline-block">
+      <div class="card flex-auto bg-neutral shadow-xl items-center text-center m-px p-5">
+        <h2 class="card-title">
+          <%= author.userName %>
+        </h2>
+        <figure class="px-10 pt-10">
+      <img src="" alt="Featured Recipe" class="rounded-xl" />
+    </figure>
+        <h2 class="card-title">About Me:</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit quae libero, sint minus molestias ducimus
+          temporibus.</p>
+      </div>
+    </section>
+    <section class="basis-1/2 inline-block">
+      <div class="card flex-auto bg-neutral shadow-xl items-center text-center m-px p-5">
+        <h2 class="card-title">
+          <%= author.userName %>`s Recipes
+        </h2>
+        <ul class="row list-unstyled mb-3">
+          <% for(var i=0; i<recipes.length && i<4; i++) { %>
+            <li class="justify-between w-1/2 mt-5">
+              <a href="/recipe/<%= recipes[i]._id%>" class="max-w-fit">
+                <div class="card card-compact bg-base-100 shadow-xl">
+                  <figure><img src="<%= recipes[i].image%>" alt="<%= recipes[i].title%>" /></figure>
+                  <div class="card-body">
+                    <h2 class="card-title">
+                      <%= recipes[i].title%>
+                    </h2>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <% } %>
+        </ul>
+        <a href="/user/<%= author.id%>/recipes" class="justify-end">See More...</a>
+      </div>
+    </section>
+    <section class="basis-1 inline-block">
+    <div class="card w-screen bg-neutral shadow-x1 m-px p-5">
+      <h2 class="card-title">Favorite Recipes</h2>
+      <ul class="row list-unstyled mb-3">
+        <% for(var i=0; i<recipes.length && i<4; i++) { %>
+          <li class="justify-between w-1/4 mt-5">
+            <a href="/recipe/<%= recipes[i]._id%>" class="max-w-fit">
+              <div class="card card-compact bg-base-100 shadow-xl">
+                <figure><img src="<%= recipes[i].image%>" alt="<%= recipes[i].title%>" /></figure>
+                <div class="card-body">
+                  <h2 class="card-title">
+                    <%= recipes[i].title%>
+                  </h2>
+                </div>
+              </div>
+            </a>
+          </li>
+          <% } %>
+      </ul>
+      <a href="/user/<%= author.id%>/liked" class="justify-end">See More...</a>
+    </div>
+  </section>
+  </div>
+-->
+  <%- include('partials/footer') -%>

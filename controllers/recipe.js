@@ -1,35 +1,28 @@
 const cloudinary = require("../middleware/cloudinary");
 const Recipe = require("../models/Recipe");
-const User = require("../models/User");
 const Comment = require("../models/Comment");
+const User = require("../models/User");
 
 module.exports = {
-  getProfile: async (req, res) => {
-    try {
-      const recipes = await Recipe.find({ author: req.user.id });
-      res.render("profile.ejs", { recipes: recipes, user: req.user });
-    } catch (err) {
-      console.log(err);
-    }
-  },
   getFeed: async (req, res) => {
     try {
       const recipes = await Recipe.find().populate('author', 'userName').sort({ createdAt: "desc" }).lean();
+      const user = await User.findOne({_id: req.user.id});
 
-      res.render("feed.ejs", { recipes: recipes});
+      res.render("feed.ejs", { recipes: recipes, user: user});
     } catch (err) {
       console.log(err);
     }
   },
   getRecipe: async (req, res) => {
     try {
-      const recipe = await Recipe.findById(req.params.id);
-      const comments = await Comment.find({ recipe: req.params.id })
+      const recipe = await Recipe.findById(req.params.id).populate('author');
+      const comments = await Comment.find({ recipe: req.params.id, user: req.user })
         .sort({ createdAt: "desc" })
         .lean();
       res.render("recipe.ejs", {
         recipe: recipe,
-        author: req.user,
+        user: req.user,
         comments: comments,
       });
     } catch (err) {
@@ -38,7 +31,7 @@ module.exports = {
   },
   newRecipe: (req, res) => {
     try {
-      res.render("newRecipe.ejs");
+      res.render("newRecipe.ejs", {user: req.user});
     } catch (err) {
       console.log(err);
     }
@@ -60,7 +53,7 @@ module.exports = {
         tips: req.body.tips,
       });
       console.log("Recipe has been added!");
-      res.redirect("/profile");
+      res.redirect("/profile/"+req.user.id);
     } catch (err) {
       console.log(err);
     }
@@ -88,9 +81,9 @@ module.exports = {
       // Delete recipe from db
       await Recipe.remove({ _id: req.params.id });
       console.log("Deleted Recipe");
-      res.redirect("/profile");
+      res.redirect("/profile/"+req.user.id);
     } catch (err) {
-      res.redirect("/profile");
+      res.redirect("/profile/"+req.user.id);
     }
   },
 };

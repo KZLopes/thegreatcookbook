@@ -4,15 +4,16 @@ const upload = require("../middleware/multer");
 const recipesController = require("../controllers/recipe");
 const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
-//Post Routes - simplified for now
-router.get("/:id", ensureAuth, recipesController.getRecipe);
-
+// Render New Recipe Form
 router.get("/new", recipesController.newRecipe);
 
 router.post("/createRecipe", upload.single("file"), recipesController.createRecipe);
 
-router.put("/likeRecipe/:id", recipesController.likeRecipe);
+// Go to a Specific Recipe
+router.get("/:id", ensureAuth, recipesController.getRecipe);
 
-router.delete("/deleteRecipe/:id", recipesController.deleteRecipe);
+router.put("/:id/likeRecipe", recipesController.likeRecipe);
+
+router.delete("/:id/deleteRecipe", recipesController.deleteRecipe);
 
 module.exports = router;

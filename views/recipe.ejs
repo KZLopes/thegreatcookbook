@@ -1,50 +1,49 @@
 <%- include('partials/header') -%>
-<main class="h-fit">
-<!-- Title,Image,Actions -->
-  <div class="grid grid-cols-2">
-    <div class="card bg-base-100 shadow-xl">
-      <h2 class="card-title"><%= recipe.title%></h2>
-      <h4 class=><%= recipe.author.userName%></h4>
-      <figure><img src="<%= recipe.image%>" alt="Dish" /></figure>
-      <div class="card-body">    
-        <div class="card-actions justify-between">
-          <button class="btn btn-accent">STAR</button>
-          <%if(recipe.author.id == user.id){ %>
-          <form
-          action="/recipe/deleteRecipe/<%= recipe.id %>?_method=DELETE"
-          method="POST"
-          >
-            <button class="btn btn-accent" type="submit">DELETE</button>
-          </form>
-          <%}%>
-        </div>
-      </div>
-    </div>
-
-  <!-- Ingredients -->
-    <div class="card bg-base-100 shadow-xl">
-      <h2 class="card-title">Ingredients</h2>
-      <div class="card-body">    
-        <ul>
-          <% for(let i=0; i < recipe.ingredients.length; i++) {%>
-            <li class="col-6 justify-content-between mt-5">
-              <%= recipe.ingredients[i]%>
-            </li>
-          <% } %>
-        </ul>
-      </div>
-    </div>
+<section class="mx-px grid grid-cols-12 gap-px bg-base-100 p-px">
+  <div class="card col-span-6 rounded-lg bg-neutral p-5">
+    <h2 class="self-center card-title pb-10">
+        <%= author.userName %>
+    </h2>
+    <figure class="px-10 pt-10">
+      <img src="<%= recipe.image%>" alt="Featured Recipe" class="rounded-xl" />
+    </figure>
+    <div class="card-actions justify-between">
+      <button class="btn btn-accent">STAR</button>
+      <%if(recipe.author.id == user.id){ %>
+        <form
+        action="/recipe/<%= recipe.id %>/deleteRecipe?_method=DELETE"
+        method="POST"
+        >
+          <button class="btn btn-accent" type="submit">DELETE</button>
+        </form>
+      <%}%>
+      </div>      
   </div>
-
-  <div class="grid grid-cols-1 min-h-1/2">
-    <div class="card bg-base-100 shadow-xl">
-        <h2 class="card-title">Walktrough</h2>
-        <p><%= recipe.walkthrough%></p>
-        <% if (recipe.tips) {%> 
-          <div class="card-title mt-5">Tips</div>
-          <p><%= recipe.tips%></p>
-        <%}%>
-    </div>
+  <div class="card col-span-6 rounded-lg bg-neutral p-5">
+      <h2 class="self-center card-title pb-10">
+          Ingredients
+      </h2>
+      <ul>
+        <% for(let i=0; i < recipe.ingredients.length; i++) {%>
+          <li class="mt-5">
+            <%= recipe.ingredients[i]%>
+          </li>
+        <% } %>
+      </ul>
   </div>
-</main>
+</section>
+<section class="mx-px grid grid-cols-12 gap-px bg-base-100 p-px">
+  <div class="card col-span-12 rounded-lg bg-neutral p-5">
+      <h2 class="card-title">Instructions</h2>
+      <p><%= recipe.walkthrough%></p>
+  </div>
+</section>
+<% if (recipe.tips) {%>
+<section>
+  <div class="card col-span-12 rounded-lg bg-neutral p-5">
+    <h2 class="card-title">Tips</h2>
+    <p><%= recipe.tips%></p>
+  </div>
+</section>
+<%}%>
 <%- include('partials/footer') -%>

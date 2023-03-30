@@ -1,5 +1,11 @@
+const user = require("./user");
+
 module.exports = {
   getIndex: (req, res) => {
-    res.render("index.ejs");
+    if (req.user) {
+      res.redirect('/user/'+req.user.id)
+    } else {
+      res.render("index.ejs", {user: req.user});
+    }
   },
 };

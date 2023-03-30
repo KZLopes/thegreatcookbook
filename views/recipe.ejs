@@ -1,15 +1,15 @@
 <%- include('partials/header') -%>
-<main class="h-screen">
+<main class="h-fit">
 <!-- Title,Image,Actions -->
-  <div class="grid grid-cols-2 min-h-2/5">
+  <div class="grid grid-cols-2">
     <div class="card bg-base-100 shadow-xl">
       <h2 class="card-title"><%= recipe.title%></h2>
-      <h4 class=><%= author.userName%></h4>
+      <h4 class=><%= recipe.author.userName%></h4>
       <figure><img src="<%= recipe.image%>" alt="Dish" /></figure>
       <div class="card-body">    
         <div class="card-actions justify-between">
           <button class="btn btn-accent">STAR</button>
-          <%if(recipe.author == author.id){ %>
+          <%if(recipe.author.id == user.id){ %>
           <form
           action="/recipe/deleteRecipe/<%= recipe.id %>?_method=DELETE"
           method="POST"

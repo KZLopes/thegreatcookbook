@@ -1,12 +1,17 @@
-alert("Hello World")
+function addField(addBtn){
+    if(addBtn.previousElementSibling.value.trim() === ""){
+        return false;
+    };
 
-// let addIngredientsBtn = document.getElementById('addIngredientsBtn');
-// let ingredientList = document.querySelector('#ingredientList');
-// let ingredientDiv = document.querySelectorAll('.ingredientDiv')[0];
+    let parentNode = document.querySelector(".ingredientsParent");
+    let clone = parentNode.lastElementChild.cloneNode(true);
 
-// addIngredientsBtn.addEventListener('click', function(){
-//   let newIngredients = ingredientDiv.cloneNode(true);
-//   let input = newIngredients.getElementsByTagName('input')[0];
-//   input.value = '';
-//   ingredientList.appendChild(newIngredients);
-// });
+    parentNode.append(clone)
+
+    addBtn.nextElementSibling.removeAttribute("style"); // Showing the minus sign
+    addBtn.style.display = "none"; // Hidding the plus sign
+};
+
+function removeField(minusBtn){
+    minusBtn.parentElement.remove();
+}

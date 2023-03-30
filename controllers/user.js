@@ -4,9 +4,10 @@ const User = require("../models/User");
 module.exports = {
   getProfile: async (req, res) => {
     try {
+      const author = await User.findOne({_id: req.params.id}).populate('liked').sort({ createdAt: "desc" }).lean();
       const recipes = await Recipe.find({ author: req.params.id });
-      const author = await User.findOne({_id: req.params.id});
-      res.render("profile.ejs", { recipes: recipes, user: req.user, author: author });
+      
+      res.render("profile.ejs", { favs: author.liked, recipes: recipes, user: req.user, author: author });
     } catch (err) {
       console.log(err);
     }
@@ -23,7 +24,6 @@ module.exports = {
   getLiked: async (req,res) => {
     try {
       const author = await User.find({ author: req.params.id }).populate('liked').sort({ createdAt: "desc" }).lean();
-      // recipes -> array with all the recipes liked by the user with the id present in the parameters
       if (author.liked) {
         res.render("feed.ejs", { recipes: author.liked, user: req.user});
       } else {
@@ -35,7 +35,7 @@ module.exports = {
   },
   getFeed: async (req, res) => {
     try {
-      const recipes = await Recipe.find().populate('author', 'userName').sort({ createdAt: "desc" }).lean();
+      const recipes = await Recipe.find().populate('author', 'userName').sort({ createdAt: "asc" }).lean();
 
       res.render("feed.ejs", { recipes: recipes, user: req.user});
     } catch (err) {

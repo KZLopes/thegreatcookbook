@@ -5,7 +5,7 @@ const User = require("../models/User");
 module.exports = {
   getLogin: (req, res) => {
     if (req.user) {
-      return res.redirect("/profile/"+req.user._id);
+      return res.redirect("/user/"+req.user._id);
     }
     res.render("login", {
       title: "Login",
@@ -40,7 +40,7 @@ module.exports = {
           return next(err);
         }
         req.flash("success", { msg: "Success! You are logged in." });
-        res.redirect(req.session.returnTo || "/profile/"+user._id);
+        res.redirect(req.session.returnTo || "/user/"+user._id);
       });
     })(req, res, next);
   },
@@ -62,7 +62,7 @@ module.exports = {
 
   getSignup: (req, res) => {
     if (req.user) {
-      return res.redirect("/profile/"+req.user._id);
+      return res.redirect("/user/"+req.user._id);
     }
     res.render("signup", {
       title: "Create Account",
@@ -111,7 +111,7 @@ module.exports = {
             if (err) {
               return next(err);
             }
-            res.redirect("/profile/"+ req.user._id);
+            res.redirect("/user/"+ req.user._id);
           });
         } catch (err) {
           return next(err);

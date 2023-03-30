@@ -20,11 +20,8 @@ module.exports = {
       const comments = await Comment.find({ recipe: req.params.id, user: req.user })
         .sort({ createdAt: "desc" })
         .lean();
-      res.render("recipe.ejs", {
-        recipe: recipe,
-        user: req.user,
-        comments: comments,
-      });
+        
+      res.render("recipe.ejs", {recipe: recipe, user: req.user, author: recipe.author, comments: comments});
     } catch (err) {
       console.log(err);
     }
@@ -53,7 +50,7 @@ module.exports = {
         tips: req.body.tips,
       });
       console.log("Recipe has been added!");
-      res.redirect("/profile/"+req.user.id);
+      res.redirect("/user/"+req.user.id);
     } catch (err) {
       console.log(err);
     }
@@ -79,11 +76,11 @@ module.exports = {
       // Delete image from cloudinary
       await cloudinary.uploader.destroy(recipe.cloudinaryId);
       // Delete recipe from db
-      await Recipe.remove({ _id: req.params.id });
+      await Recipe.deleteOne({ _id: req.params.id });
       console.log("Deleted Recipe");
-      res.redirect("/profile/"+req.user.id);
+      res.redirect("/user/"+req.user.id);
     } catch (err) {
-      res.redirect("/profile/"+req.user.id);
+      res.redirect("back");
     }
   },
 };

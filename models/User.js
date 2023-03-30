@@ -2,13 +2,31 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-  userName: { type: String, unique: true },
-  email: { type: String, unique: true },
-  password: String,
+  userName: { 
+    type: String,
+    unique: true
+  },
+  email: {
+    type: String,
+    unique: true
+  },
+  password:{
+    type: String
+  },
+  recipes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Recipe"
+  }],
+  following: [{
+    type: mongoose.Schema.Types.ObjectId,
+  }],
+  liked: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Recipe"
+  }]
 });
 
 // Password salting
-
 UserSchema.pre("save", function save(next) {
   const user = this;
   if (!user.isModified("password")) {

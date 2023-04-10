@@ -1,70 +1,64 @@
 <%- include('partials/header') -%>
-<section class="mx-px grid grid-cols-12 gap-px bg-base-100 p-px">
-    <div class="card col-span-6 rounded-lg bg-neutral p-5">
-        <h2 class="self-center card-title pb-10">
-            <%= author.userName %>
-        </h2>
-        <figure class="px-10 pt-10">
-            <img src="" alt="Featured Recipe" class="rounded-xl" />
-        </figure>
-        <h2 class="card-title">
-            About Me:
-        </h2>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit quae libero, sint minus molestias ducimus
-            temporibus.
-        </p>
-    </div>
-    <div class="card col-span-6 rounded-lg bg-neutral p-5">
-        <h2 class="self-center card-title pb-10">
-            <%= author.userName %>`s Recipes
-        </h2>
-        <ul class="grid grid-cols-2 grid-rows-2 gap-4">
-            <% for(var i=0; i<recipes.length && i<4; i++) { %>
-                <li>
-                    <a href="/recipe/<%= recipes[i]._id%>">
-                        <div class="card card-compact bg-base-100 shadow-xl">
-                            <figure class="max-h-40">
-                                <img class="object-cover" src="<%= recipes[i].image%>"
-                                    alt="<%= recipes[i].title%>" />
-                            </figure>
-                            <h2 class="flex justify-end text-center card-body">
-                                <%= recipes[i].title%>
-                            </h2>
-                        </div>
-                    </a>
-                </li>
-                <% } %>
-        </ul>
-        <a class="self-end" href="/user/<%= author._id%>/recipes" class="self-end">See More...</a>
-    </div>
+<section class="grid gap-px mx-px p-px min-h-[40rem] bg-base-100 md:grid-cols-2">
+  <div class="card h-full rounded-lg bg-neutral p-5">
+    <h2 class="self-center card-title pb-10">
+      <%= author.userName %>
+    </h2>
+    <a href="/recipe/<%=author.featured._id%>">
+      <img src="<%=author.featured.image%>" alt="Featured Recipe" class="h-96 object-cover rounded-xl" />
+    </a>
+    <h2 class="card-title mt-5">
+      Sobre Mim:
+    </h2>
+    <p class="card-body">
+      <%= author.aboutMe %>
+    </p>
+  </div>
+  <div class="card h-full rounded-lg bg-neutral p-5 grid-rows-3">
+    <h2 class="self-center card-title pb-10">
+      Receitas de <%= author.userName %>
+    </h2>
+    <ul class="grid gap-4 h-full sm:grid-cols-2 2xl:grid-cols-4">
+      <% for(var i=0; i<recipes.length && i<4; i++) { %>
+        <li>
+          <a href="/recipe/<%= recipes[i]._id%>">
+            <div class="card card-compact bg-base-100 shadow-xl">
+              <figure>
+                <img class="w-full h-40 object-cover" src="<%= recipes[i].image%>" alt="<%= recipes[i].title%>" />
+              </figure>
+              <h2 class="flex justify-end text-center card-body">
+                <%= recipes[i].title%>
+              </h2>
+            </div>
+          </a>
+        </li>
+        <% } %>
+    </ul>
+    <a href="/user/<%= author._id%>/recipes" class="text-end align-bottom">Ver Todos</a>
+  </div>
 </section>
-<section class="mx-px grid grid-cols-12 gap-px bg-base-100 p-px">
-    <div class="card col-span-12 rounded-lg bg-neutral p-5">
-        <h2 class="card-title">Favorite Recipes</h2>
-        <%if (favs) {%>
-            <ul class="grid grid-cols-6 gap-x-5">
-            <% for(var i=0; i<recipes.length && i<6; i++) { %>
-                <li>
-                    <a href="/recipe/<%= favs[i]._id%>">
-                        <div class="card card-compact bg-base-100 shadow-xl">
-                            <figure class="max-h-40">
-                                <img class="object-cover" src="<%= favs[i].image%>" alt="<%= favs[i].title%>" />
-                            </figure>
-                            <h2 class="flex justify-end text-center card-body">
-                                <%= favs[i].title%>
-                            </h2>
-                        </div>
-                    </a>
-                </li>
-            <% } %>
-            </ul>            
-        <%} else {%>
-            <h1>Like some recipes to see them here!</h1>
-        <%}%>
-
-        
-        <a href="/user/<%= author._id%>/liked" class="self-end">See More...</a>
-    </div>
+<section class="grid gap-px mx-px p-px min-h-[20rem] bg-base-100">
+  <div class="card h-full rounded-lg bg-neutral p-5">
+    <h2 class="self-center card-title pb-10">
+      Favoritos de <%= author.userName %>
+    </h2>
+    <ul class="grid gap-4 h-full sm:grid-cols-3 2xl:grid-cols-6">
+      <% for(var i=0; i<favs.length && i<6; i++) { %>
+        <li>
+          <a href="/recipe/<%= favs[i]._id%>">
+            <div class="card card-compact bg-base-100 shadow-xl">
+              <figure>
+                <img class="w-full h-40 object-cover" src="<%= favs[i].image%>" alt="<%= favs[i].title%>" />
+              </figure>
+              <h2 class="flex justify-end text-center card-body">
+                <%= favs[i].title%>
+              </h2>
+            </div>
+          </a>
+        </li>
+        <% } %>
+    </ul>
+    <a href="/user/<%= author._id%>/liked" class="text-end align-bottom"> Ver Todos</a>
+  </div>
 </section>
 <%- include('partials/footer') -%>

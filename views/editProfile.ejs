@@ -1,0 +1,51 @@
+<%- include('partials/header') -%>
+<div class="card flex-auto mx-1 bg-base-100 shadow-xl">
+  <div class="card-body items-center text-center w-full">
+    <h2 class="card-title">Editar Perfil</h2>
+    <div class="mt-5 w-1/2">
+      <form
+        action="/user/<%=user.id%>/update?_method=PUT"
+        method="POST"
+      >
+        <div class="form-control w-full">
+          <label class="input-group mx-1">
+            <span>Nome de Usuário</span>
+            <input
+              type="text"
+              class="input input-bordered w-full text-neutral-content placeholder-base-content"
+              name="userName"
+              value="<%=user.userName%>"
+            />
+          </label>
+          <label class="input-group my-1">
+            <span>Sobre Você:</span>
+            <textarea
+              class="textarea textarea-bordered w-full text-neutral-content placeholder-base-content"
+              name="aboutMe"
+            ><%=user.aboutMe%>
+            </textarea>
+          </label>
+          <!-- <label
+            for="imgUpload"
+            class="input-group input-group-vertical my-4 w-full"
+          >
+            <span>Foto</span>
+            <input
+              type="file"
+              class="file-input-primary file-input file-input-bordered w-full text-neutral-content placeholder-base-content"
+              id="imageUpload"
+              name="file"
+            />
+          </label> -->
+        </div>
+        <button
+          type="submit"
+          class="flex-auto btn btn-outline btn-accent btn-lg"
+        >
+          Enviar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('partials/footer') -%>

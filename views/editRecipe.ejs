@@ -15,20 +15,22 @@
               type="text"
               class="input input-bordered w-full text-neutral-content placeholder-base-content"
               name="title"
-              placeholder="Cachorro-Quente"
+              value="<%=recipe.title%>"
             />
           </label>
           <div class="ingredientsParent">
             <label class="input-group input-group-vertical my-1">
               <span class="flex justify-center">Ingredientes</span>
             </label>
+            <%for (let i = 0; i<recipe.ingredients.length; i++) {%>
             <div class="input-group flex place-content-center my-px">
               <input
                 type="text"
                 class="input input-bordered w-full text-neutral-content placeholder-base-content"
                 name="ingredients"
-                placeholder="100g de Extrato de Tomate"
+                value="<%=recipe.ingredients[i]%>"
               />
+              <%if (i == recipe.ingredients.length - 1) {%>
               <span class="btn flex justify-center" onclick="addField(this)"
                 >+</span
               >
@@ -38,15 +40,25 @@
                 style="display: none"
                 >-</span
               >
+              <%} else {%>
+                <span class="btn flex justify-center" onclick="addField(this)" style="display: none"
+                >+</span
+              >
+              <span
+                class="btn flex justify-center"
+                onclick="removeField(this)"
+                >-</span
+              >
+              <%}%>
             </div>
+            <%}%>
           </div>
           <label class="reference input-group my-1">
             <span>Preparo</span>
             <textarea
               class="textarea textarea-bordered w-full text-neutral-content placeholder-base-content"
               name="walkthrough"
-              placeholder="Passo 1 - Ferva a água"
-            ></textarea>
+            ><%=recipe.walkthrough%></textarea>
           </label>
 
           <label class="input-group my-1">
@@ -54,8 +66,7 @@
             <textarea
               class="textarea textarea-bordered w-full text-neutral-content placeholder-base-content"
               name="tips"
-              placeholder="Se quiser subtitua o extrato de tomate por ketchup"
-            ></textarea>
+            ><%=recipe.tips%></textarea>
           </label>
 
           <label class="input-group my-1">
@@ -64,7 +75,7 @@
               type="number"
               class="input input-bordered w-full text-neutral-content placeholder-base-content"
               name="prepTime"
-              placeholder="30"
+              value="<%=recipe.prepTime%>"
             />
             <span>Minutos</span>
           </label>
@@ -75,11 +86,11 @@
               type="number"
               class="input input-bordered w-full text-neutral-content placeholder-base-content"
               name="portions"
-              placeholder="5"
+              value="<%=recipe.portions%>"
             />
           </label>
 
-          <label
+          <!-- <label
             for="imgUpload"
             class="input-group input-group-vertical my-4 w-full"
           >
@@ -90,7 +101,7 @@
               id="imageUpload"
               name="file"
             />
-          </label>
+          </label> -->
         </div>
         <button
           type="submit"

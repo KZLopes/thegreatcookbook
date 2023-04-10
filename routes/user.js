@@ -11,4 +11,8 @@ router.get("/:id/liked", ensureAuth, userController.getLiked);
 
 router.get("/:id/feed", ensureAuth, userController.getFeed);
 
+router.get("/:id/edit", ensureAuth, userController.editProfile); 
+
+router.put("/:id/update", ensureAuth, userController.updateProfile); 
+
 module.exports = router;

@@ -60,6 +60,7 @@ app.use("/", mainRoutes);
 app.use("/user", userRoutes);
 app.use("/recipe", recipeRoutes);
 app.use("/comment", commentRoutes);
+app.all("*", (req, res) => res.redirect('back'));
 
 //Server Running
 app.listen(process.env.PORT, () => {

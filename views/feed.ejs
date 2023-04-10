@@ -1,12 +1,12 @@
 <%- include('partials/header') -%>
 <main class="card col-span-4 rounded-lg bg-neutral p-5">
-    <ul class="grid grid-cols-4 gap-4">
+    <ul class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6">
     <% for(var i=0; i<recipes.length; i++) { %>
         <li>
             <a href="/recipe/<%= recipes[i]._id%>">
                 <div class="card card-compact bg-base-100 shadow-xl">
-                    <figure class="max-h-40">
-                        <img class="object-cover" src="<%= recipes[i].image%>"
+                    <figure>
+                        <img class="w-full h-40 object-cover" src="<%= recipes[i].image%>"
                             alt="<%= recipes[i].title%>" />
                     </figure>
                     <h2 class="flex justify-end text-center card-body">

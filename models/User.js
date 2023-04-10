@@ -13,6 +13,19 @@ const UserSchema = new mongoose.Schema({
   password:{
     type: String
   },
+  avatar: {
+    type:String,
+    default:"/img/avatar.png"
+  },
+  cloudinaryId: {
+    type: String,
+    require: true,
+  },
+    aboutMe:{
+      type: String,
+      maxLength: 300,
+      default: ""
+    },
   recipes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Recipe"
@@ -23,7 +36,11 @@ const UserSchema = new mongoose.Schema({
   liked: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Recipe"
-  }]
+  }],
+  featured: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Recipe"
+  }
 });
 
 // Password salting

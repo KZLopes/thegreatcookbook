@@ -1,52 +1,58 @@
-const bcrypt = require("bcrypt");
-const mongoose = require("mongoose");
+const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-  userName: { 
+  userName: {
     type: String,
-    unique: true
+    unique: true,
   },
   email: {
     type: String,
-    unique: true
+    unique: true,
   },
-  password:{
-    type: String
+  password: {
+    type: String,
   },
   avatar: {
-    type:String,
-    default:"/img/avatar.png"
+    type: String,
+    default: '/img/avatar.png',
   },
   cloudinaryId: {
     type: String,
     require: true,
   },
-    aboutMe:{
-      type: String,
-      maxLength: 300,
-      default: ""
+  aboutMe: {
+    type: String,
+    maxLength: 300,
+    default: '',
+  },
+  recipes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Recipe',
     },
-  recipes: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Recipe"
-  }],
-  following: [{
-    type: mongoose.Schema.Types.ObjectId,
-  }],
-  liked: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Recipe"
-  }],
+  ],
+  following: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+    },
+  ],
+  liked: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Recipe',
+    },
+  ],
   featured: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Recipe"
-  }
+    ref: 'Recipe',
+  },
 });
 
 // Password salting
-UserSchema.pre("save", function save(next) {
+UserSchema.pre('save', function save(next) {
   const user = this;
-  if (!user.isModified("password")) {
+  if (!user.isModified('password')) {
     return next();
   }
   bcrypt.genSalt(10, (err, salt) => {
@@ -65,8 +71,13 @@ UserSchema.pre("save", function save(next) {
 
 // Helper method for password validation
 
-UserSchema.methods.comparePassword = function comparePassword(candidatePassword,cb) {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => { cb(err, isMatch)})
+UserSchema.methods.comparePassword = function comparePassword(
+  candidatePassword,
+  cb
+) {
+  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+    cb(err, isMatch);
+  });
 };
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', UserSchema);

@@ -3,12 +3,7 @@
   <div class="hero min-h-screen w-screen bg-base-200">
     <div class="hero-content flex-col lg:flex-row-reverse">
       <div class="text-center lg:text-left">
-        <h1 class="text-5xl font-bold">Sign Up Now!</h1>
-        <p class="py-6 w-80">
-          Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-          excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a
-          id nisi.
-        </p>
+        <h1 class="text-5xl font-bold">Cadastre-se!</h1>
       </div>
       <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
         <div class="card-body flex">
@@ -21,7 +16,7 @@
           <% }) %> <% } %>
           <form action="/signup" method="POST">
             <div class="form-control">
-              <label for="userName" class="form-label">User Name</label>
+              <label for="userName" class="form-label">Nome de Usuário</label>
               <input
                 type="text"
                 class="input input-bordered"
@@ -30,9 +25,7 @@
               />
             </div>
             <div class="form-control">
-              <label for="exampleInputEmail1" class="form-label"
-                >Email address</label
-              >
+              <label for="exampleInputEmail1" class="form-label">Email</label>
               <input
                 type="email"
                 class="input input-bordered"
@@ -41,11 +34,11 @@
                 name="email"
               />
               <div id="emailHelp" class="text-center text-xs">
-                We'll never share your email with anyone else.
+                Nunca compartilharemos seu email
               </div>
             </div>
             <div class="form-control">
-              <label for="password" class="form-label">Password</label>
+              <label for="password" class="form-label">Senha</label>
               <input
                 type="password"
                 class="input input-bordered"
@@ -55,7 +48,7 @@
             </div>
             <div class="form-control">
               <label for="confirmPassword" class="form-label"
-                >Confirm Password</label
+                >Confirmar Senha</label
               >
               <input
                 type="password"
@@ -69,7 +62,7 @@
                 type="submit"
                 class="flex-auto btn btn-outline btn-primary btn-lg"
               >
-                Submit
+                Enviar
               </button>
             </div>
           </form>

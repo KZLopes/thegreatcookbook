@@ -1,4 +1,5 @@
 <%- include('partials/header') -%>
+<!-- User Details -->
 <section class="grid gap-px mx-px p-px min-h-[40rem] bg-base-100 md:grid-cols-2">
   <div class="card h-full rounded-lg bg-neutral p-5">
     <h2 class="self-center card-title pb-10">
@@ -13,7 +14,12 @@
     <p class="card-body">
       <%= author.aboutMe %>
     </p>
+    <%if(author._id == user.id){ %>
+      <a href="/user/<%= author._id%>/edit" class="text-end align-bottom fa-solid fa-pen"></a>
+    <%}%>
+
   </div>
+  <!-- User Recipes -->
   <div class="card h-full rounded-lg bg-neutral p-5 grid-rows-3">
     <h2 class="self-center card-title pb-10">
       Receitas de <%= author.userName %>
@@ -37,6 +43,7 @@
     <a href="/user/<%= author._id%>/recipes" class="text-end align-bottom">Ver Todos</a>
   </div>
 </section>
+<!-- User Favorites -->
 <section class="grid gap-px mx-px p-px min-h-[20rem] bg-base-100">
   <div class="card h-full rounded-lg bg-neutral p-5">
     <h2 class="self-center card-title pb-10">

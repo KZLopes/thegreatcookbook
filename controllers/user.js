@@ -1,21 +1,26 @@
-const cloudinary = require("../middleware/cloudinary");
-const Recipe = require("../models/Recipe");
-const User = require("../models/User");
+const cloudinary = require('../middleware/cloudinary');
+const Recipe = require('../models/Recipe');
+const User = require('../models/User');
 
 module.exports = {
   getProfile: async (req, res) => {
     try {
       const author = await User.findOne({ _id: req.params.id })
-        .populate("liked")
-        .populate("featured")
-        .sort({ createdAt: "desc" })
+        .populate('liked')
+        .populate('featured')
+        .sort({ createdAt: 'desc' })
         .lean();
-      const recipes = await Recipe.find({ author: req.params.id });
+      const recipes = await Recipe.find({ author: req.params.id }).sort({
+        createdAt: 'desc',
+      });
 
       if (!author.featured) {
-        author.featured = {"image": "https://res.cloudinary.com/dmyro6sg5/image/upload/v1681157134/featured-placeholder.png"}
+        author.featured = {
+          image:
+            'https://res.cloudinary.com/dmyro6sg5/image/upload/v1681157134/featured-placeholder.png',
+        };
       }
-      res.render("profile.ejs", {
+      res.render('profile.ejs', {
         favs: author.liked,
         recipes: recipes,
         user: req.user,
@@ -29,7 +34,7 @@ module.exports = {
     try {
       const recipes = await Recipe.find({ author: req.params.id });
       // recipes -> all recipes from id in the params
-      res.render("feed.ejs", { recipes: recipes, user: req.user });
+      res.render('feed.ejs', { recipes: recipes, user: req.user });
     } catch (err) {
       console.log(err);
     }
@@ -37,13 +42,13 @@ module.exports = {
   getLiked: async (req, res) => {
     try {
       const author = await User.find({ author: req.params.id })
-        .populate("liked")
-        .sort({ createdAt: "desc" })
+        .populate('liked')
+        .sort({ createdAt: 'desc' })
         .lean();
       if (author.liked) {
-        res.render("feed.ejs", { recipes: author.liked, user: req.user });
+        res.render('feed.ejs', { recipes: author.liked, user: req.user });
       } else {
-        res.redirect("back");
+        res.redirect('back');
       }
     } catch (err) {
       console.log(err);
@@ -52,18 +57,22 @@ module.exports = {
   getFeed: async (req, res) => {
     try {
       const recipes = await Recipe.find()
-        .populate("author", "userName")
-        .sort({ createdAt: "asc" })
+        .populate('author', 'userName')
+        .sort({ createdAt: 'asc' })
         .lean();
 
-      res.render("feed.ejs", { recipes: recipes, user: req.user });
+      res.render('feed.ejs', { recipes: recipes, user: req.user });
     } catch (err) {
       console.log(err);
     }
   },
   editProfile: async (req, res) => {
     try {
-      res.render("editProfile.ejs", { user: req.user });
+      const recipes = await Recipe.find({ author: req.params.id }).sort({
+        createdAt: 'desc',
+      });
+
+      res.render('editProfile.ejs', { user: req.user, recipes: recipes });
     } catch (err) {
       console.log(err);
     }
@@ -90,10 +99,11 @@ module.exports = {
             $set: {
               userName: req.body.userName,
               aboutMe: req.body.aboutMe,
+              featured: req.body.featured,
             },
           }
         );
-        res.redirect("/");
+        res.redirect('/');
       }
     } catch (err) {
       console.log(err);

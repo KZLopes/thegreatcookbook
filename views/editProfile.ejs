@@ -3,10 +3,7 @@
   <div class="card-body items-center text-center w-full">
     <h2 class="card-title">Editar Perfil</h2>
     <div class="mt-5 w-1/2">
-      <form
-        action="/user/<%=user.id%>/update?_method=PUT"
-        method="POST"
-      >
+      <form action="/user/<%=user.id%>/update?_method=PUT" method="POST">
         <div class="form-control w-full">
           <label class="input-group mx-1">
             <span>Nome de Usuário</span>
@@ -22,21 +19,22 @@
             <textarea
               class="textarea textarea-bordered w-full text-neutral-content placeholder-base-content"
               name="aboutMe"
-            ><%=user.aboutMe%>
+            >
+              <%=user.aboutMe%>
             </textarea>
           </label>
-          <!-- <label
-            for="imgUpload"
-            class="input-group input-group-vertical my-4 w-full"
-          >
-            <span>Foto</span>
-            <input
-              type="file"
-              class="file-input-primary file-input file-input-bordered w-full text-neutral-content placeholder-base-content"
-              id="imageUpload"
-              name="file"
-            />
-          </label> -->
+          <label class="input-group mx-1">
+            <span>Receita Pinada</span>
+            <select
+              class="select select-bordered w-full text-neutral-content placeholder-base-content"
+              name="featured"
+            >
+              <option disabled selected>-</option>
+              <% for(var i=0; i<recipes.length; i++) { %>
+                <option value=<%=recipes[i]._id %>> <%=recipes[i].title%></option>
+              <% } %>
+            </select>
+          </label>
         </div>
         <button
           type="submit"
